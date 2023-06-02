@@ -1,20 +1,27 @@
-import { createPool } from 'mysql2/promise';
+import { Sequelize } from 'sequelize';
+
 import {
-    DB_HOST, 
-    DB_DATABASE, 
-    DB_PORT, 
-    DB_USER, 
+    DB_HOST,
+    DB_DATABASE,
+    DB_PORT,
+    DB_USER,
     DB_PASSWORD
 } from './config.js';
 
-const pool = createPool({
+const sequelize = new Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
     host: DB_HOST,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_DATABASE,
-    port: DB_PORT
+    dialect: 'mysql'
 });
 
-export {
-    pool
-};
+const dbConnection = async () => {
+    try {
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+}
+
+dbConnection();
+
+export default sequelize;

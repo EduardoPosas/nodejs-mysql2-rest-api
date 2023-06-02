@@ -1,20 +1,28 @@
 import { Router } from "express";
 import {
-    getUsers,
     createUser,
-    updateUser,
-    deleteUser,
-    getUser
+    confirmUser,
+    login,
+    forgotPassword,
+    tokenVerification,
+    changePassword
 } from "../controllers/users.controller.js";
+
+import { validateCreate, validateLogin, validateEmail, validatePassword } from "../validators/users.js";
 
 const router = Router();
 
-router.get('/users', getUsers);
-router.get('/users/:id', getUser)
-router.post('/users', createUser);
-// router.put('/users/:id', updateUser); // Update all data
-router.patch('/users/:id', updateUser); // Update data partially
-router.delete('/users/:id', deleteUser);
+
+// User registration and confirmation
+router.post('/users', validateCreate, createUser);
+router.get('/users/confirm/:token', confirmUser);
+
+// Login
+router.post('/users/login', validateLogin, login);
+
+// Forgot Password
+router.post('/users/forgot-password', validateEmail, forgotPassword);
+router.route('/users/forgot-password/:token').get(tokenVerification).post(validatePassword, changePassword);
 
 
 export default router;

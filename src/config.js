@@ -9,12 +9,6 @@ const DB_PORT = process.env.DB_PORT ?? 3306;
 const DB_USER = process.env.DB_USER ?? 'root';
 const DB_PASSWORD = process.env.DB_PASSWORD ?? 'root';
 
-// console.log(PORT);
-// console.log(DB_HOST);
-// console.log(DB_DATABASE);
-// console.log(DB_PORT);
-// console.log(DB_USER);
-// console.log(DB_PASSWORD);
 
 export {
     PORT,
